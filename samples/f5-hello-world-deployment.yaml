@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: f5-hello-world 
+  name: f5-hello-world2 
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        run: f5-hello-world
+        run: f5-hello-world2
     spec:
       containers:
-      - name: f5-hello-world
+      - name: f5-hello-world2
         image: "f5devcentral/f5-hello-world"
         imagePullPolicy: IfNotPresent
         ports:
