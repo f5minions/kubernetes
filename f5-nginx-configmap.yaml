@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx
+  namespace: default
+  labels:
+    f5type: virtual-server
+data:
+  schema: "f5schemadb://bigip-virtual-server_v0.1.7.json"
+  data: |
+    {
+      "virtualServer": {
+        "frontend": {
+          "balance": "round-robin",
+          "mode": "http",
+          "partition": "kubernetes",
+          "virtualAddress": {
+            "bindAddr": "116.124.168.13",
+            "port": 8081
+          }
+        },
+        "backend": {
+          "serviceName": "nginx",
+          "servicePort": 80,
+          "healthMonitors": [{
+            "interval": 5,
+            "protocol": "http",
+            "send": "HEAD / HTTP/1.0\r\n\r\n",
+            "timeout": 16
+          }]
+        }
+      }
+    }

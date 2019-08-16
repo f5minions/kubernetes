@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: f5-nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: f5-nginx
+    spec:
+      containers:
+      - name: f5-nginx
+        image: "nginx"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          protocol: TCP
