@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    virtual-server.f5.com/rewrite-target-url: "k8sweb.f5knetwork.com/user1/service1=k8sweb2.f5knetwork.com/,old.example.com/user1/service2=k8sweb.f5knetwork.com/"
+  name: rewrite-about
+  namespace: default
+spec:
+  rules:
+  - host: old.example.com
+    http:
+      paths:
+      - path: /user1/service1
+        backend:
+          serviceName: f5-hello-world
+          servicePort: 8080
+- host: old.example.com
+    http:
+      paths:
+      - path: /user1/service2
+        backend:
+          serviceName: nginx
+          servicePort: 80
