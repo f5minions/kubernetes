@@ -2,19 +2,23 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    virtual-server.f5.com/rewrite-target-url: "k8sweb.f5knetwork.com/user1/service1=k8sweb2.f5knetwork.com/,old.example.com/user1/service2=k8sweb.f5knetwork.com/"
+    virtual-server.f5.com/ip: "116.124.168.13"
+    virtual-server.f5.com/partition: "kubernetes"
+    virtual-server.f5.com/balance: "least-connections-node"
+    virtual-server.f5.com/http-port: "80"
+    virtual-server.f5.com/rewrite-target-url: "k8sweb.f5knetwork.com/user1/service1=k8sweb.f5knetwork.com/,k8sweb.f5knetwork.com/user1/service2=k8sweb.f5knetwork.com/"
   name: rewrite-about
   namespace: default
 spec:
   rules:
-  - host: old.example.com
+  - host: k8sweb.f5knetwork.com
     http:
       paths:
       - path: /user1/service1
         backend:
           serviceName: f5-hello-world
           servicePort: 8080
-- host: old.example.com
+  - host: k8sweb.f5knetwork.com
     http:
       paths:
       - path: /user1/service2
