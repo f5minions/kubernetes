@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ing-fanout
+  namespace: default
+  annotations:
+  # See the k8s-bigip-ctlr documentation for information about
+  # all Ingress Annotations
+  # https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest/#supported-ingress-annotations
+    virtual-server.f5.com/ip: "10.1.10.101"
+    virtual-server.f5.com/partition: "kubernetes"
+    virtual-server.f5.com/balance: "least-connections-node"
+spec:
+  rules:
+  - host: ing.f5knetwork.com
+    http:
+      paths:
+      - path: /frontweb
+        backend:
+          serviceName: frontweb
+          servicePort: 80
+      - path: /nginx
+        backend:
+          serviceName: jk-nginx
+          servicePort: 80

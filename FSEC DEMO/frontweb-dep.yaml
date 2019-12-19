@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontweb
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: frontweb
+    spec:
+      containers:
+      - image: "f5devcentral/f5-demo-httpd:nginx"
+        imagePullPolicy: IfNotPresent
+        name: frontweb
+        ports:
+        - containerPort: 80
+          protocol: TCP
