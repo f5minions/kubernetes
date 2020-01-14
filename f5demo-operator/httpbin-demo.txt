@@ -1,0 +1,8 @@
+kubectl create ns plain
+kubectl apply -f <(istioctl kube-inject -f samples/httpbin/httpbin.yaml) -n plain
+kubectl create ns jwt
+kubectl apply -f <(istioctl kube-inject -f samples/httpbin/httpbin.yaml) -n jwt
+kubectl create ns mtls
+kubectl apply -f <(istioctl kube-inject -f samples/httpbin/httpbin.yaml) -n mtls
+
+
